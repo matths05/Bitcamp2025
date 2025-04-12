@@ -1,6 +1,6 @@
 import { FlatList, View, Text, StyleSheet, Dimensions } from 'react-native';
-import { StockChart } from '@/components/StockChart';
-import { NewsCard } from '@/components/NewsCard';
+import { StockChart } from '../components/StockChart';
+import { NewsCard } from '../components/NewsCard';
 import { useState, useRef } from 'react';
 
 const ITEM_HEIGHT = Dimensions.get('window').height;
@@ -11,62 +11,243 @@ const mockNews = {
   'AAPL': [
     {
       id: '1',
-      title: "Apple's Vision Pro Launch Marks Major Milestone",
-      date: 'Feb 2, 2024',
-      source: 'TechCrunch',
-      content: "Apple's highly anticipated Vision Pro headset launches today, marking the company's first major new product category since the Apple Watch..."
+      title: "Consumer Tech News: US President Puts 90-Days Pause On Tariffs, Microsoft May Cut Jobs & More",
+      date: 'April 12, 2025',
+      source: 'Benzinga',
+      content: "US President puts 90-days pause on tariffs, impacting the tech industry including Apple."
     },
     {
       id: '2',
-      title: 'Apple Reports Record Q1 Earnings',
-      date: 'Feb 1, 2024',
-      source: 'Bloomberg',
-      content: 'Apple Inc. reported stronger-than-expected quarterly earnings, driven by iPhone sales and continued growth in services revenue...'
+      title: "Trump Administration Grants Tariff Reprieve To Tech Industry; Apple And Nvidia Among Beneficiaries",
+      date: 'April 12, 2025',
+      source: 'Benzinga',
+      content: "The Trump administration has granted a tariff reprieve to the tech industry, with Apple and Nvidia among the beneficiaries."
+    },
+    {
+      id: '3',
+      title: "Bulls And Bears: Apple, Nike, US Steel - And The Markets Ride Out Ongoing Volatility",
+      date: 'April 12, 2025',
+      source: 'Benzinga',
+      content: "Market analysis featuring Apple, Nike, and US Steel as markets continue to experience volatility."
     }
   ],
-  'GOOG': [
+  'INTC': [
     {
       id: '1',
-      title: 'Google Announces Major AI Advancements',
-      date: 'Feb 2, 2024',
-      source: 'The Verge',
-      content: 'Google unveiled its latest AI model, demonstrating significant improvements in natural language understanding and generation...'
+      title: "Consumer Tech News: US President Puts 90-Days Pause On Tariffs, Microsoft May Cut Jobs & More",
+      date: 'April 12, 2025',
+      source: 'Benzinga',
+      content: "US President puts 90-days pause on tariffs, potentially impacting Intel among other tech companies."
+    },
+    {
+      id: '2',
+      title: "1 Artificial Intelligence Stock I'm Buying Hand Over First While It's Down 30%",
+      date: 'April 12, 2025',
+      source: 'The Motley Fool',
+      content: "Analysis of an AI stock that's currently down 30%, possibly referencing Intel as an investment opportunity."
+    },
+    {
+      id: '3',
+      title: "Trump Tariff Wars: China's New Rule To Exempt Nvidia, Qualcomm And Others From Levies, But These Chip Companies Will Be Hit With 125% Tariffs",
+      date: 'April 12, 2025',
+      source: 'Benzinga',
+      content: "China has implemented new tariff rules that exempt certain chip companies like Nvidia and Qualcomm, while others may face 125% tariffs."
     }
   ],
-  'MSFT': [
+  'NET': [
     {
       id: '1',
-      title: 'Microsoft Cloud Revenue Soars',
-      date: 'Feb 1, 2024',
-      source: 'Reuters',
-      content: 'Microsoft reported exceptional growth in its cloud computing division, with Azure revenue exceeding analyst expectations...'
+      title: "Top Technology Executives Recognized at the 2025 SeattleCIO ORBIE Awards",
+      date: 'April 11, 2025',
+      source: 'Benzinga',
+      content: "Recognition of top technology executives at the 2025 SeattleCIO ORBIE Awards."
+    },
+    {
+      id: '2',
+      title: "Deal Dispatch: Harley-Davidson To Wipe Out? Plus, Prada's Versace Purchase Garners A Fashionable Price",
+      date: 'April 11, 2025',
+      source: 'Benzinga',
+      content: "Business deals update including potential Harley-Davidson developments and Prada's purchase of Versace."
+    },
+    {
+      id: '3',
+      title: "StarkWare researchers propose smart contracts for Bitcoin with ColliderVM",
+      date: 'April 11, 2025',
+      source: 'CoinTelegraph',
+      content: "StarkWare researchers have proposed a new method for implementing smart contracts for Bitcoin using ColliderVM technology."
+    }
+  ],
+  'PLTR': [
+    {
+      id: '1',
+      title: "Stock Market Crash: Is Palantir a Buy?",
+      date: 'April 12, 2025',
+      source: 'The Motley Fool',
+      content: "Analysis of whether Palantir represents a good buying opportunity during a stock market downturn."
+    },
+    {
+      id: '2',
+      title: "Should You Forget Palantir and Buy This Artificial Intelligence (AI) Stock Instead?",
+      date: 'April 12, 2025',
+      source: 'The Motley Fool',
+      content: "Comparison between Palantir and another AI stock, evaluating which might be a better investment opportunity."
+    },
+    {
+      id: '3',
+      title: "Prediction: 2 AI Stocks Will Be Worth More Than Palantir Technologies by Early 2026",
+      date: 'April 12, 2025',
+      source: 'The Motley Fool',
+      content: "Analysis predicting that two AI stocks will surpass Palantir Technologies in market value by early 2026."
+    }
+  ],
+  'APP': [
+    {
+      id: '1',
+      title: "AppLovin Corporation Investors: May 5, 2025 Filing Deadline in Securities Class Action",
+      date: 'April 11, 2025',
+      source: 'Benzinga',
+      content: "Notification about May 5, 2025 filing deadline in securities class action for AppLovin Corporation investors."
+    },
+    {
+      id: '2',
+      title: "Tech Stocks Soared This Week, but Uncertainty Persists",
+      date: 'April 11, 2025',
+      source: 'The Motley Fool',
+      content: "Analysis of tech stocks performance this week with mention of ongoing uncertainty in the market."
+    },
+    {
+      id: '3',
+      title: "Tech stocks head for winning week with Nvidia tracking for 15% bounceback",
+      date: 'April 11, 2025',
+      source: 'CNBC',
+      content: "Tech stocks are heading for a winning week with Nvidia tracking for a 15% recovery."
+    }
+  ],
+  'TSLA': [
+    {
+      id: '1',
+      title: "Consumer Tech News: US President Puts 90-Days Pause On Tariffs, Microsoft May Cut Jobs & More",
+      date: 'April 12, 2025',
+      source: 'Benzinga',
+      content: "US President puts 90-days pause on tariffs, potentially affecting Tesla among other tech companies."
+    },
+    {
+      id: '2',
+      title: "Warren Buffett's Wealth Grows Even Amid Tariff War and Global Market Turmoil",
+      date: 'April 12, 2025',
+      source: 'Benzinga',
+      content: "Warren Buffett's wealth continues to grow despite ongoing tariff war and global market turmoil, with mentions of Tesla."
+    },
+    {
+      id: '3',
+      title: "Elon Musk's Cybertruck Is Controversial, But Kids Love It",
+      date: 'April 12, 2025',
+      source: 'Benzinga',
+      content: "While Tesla's Cybertruck has been controversial among adults, it appears to be popular with children."
+    }
+  ],
+  'MSTR': [
+    {
+      id: '1',
+      title: "Insider Trading: 3 CEOs Recently Buying Shares",
+      date: 'April 11, 2025',
+      source: 'Zacks',
+      content: "Report on three CEOs who have recently purchased shares of their own companies."
+    },
+    {
+      id: '2',
+      title: "Q2 Bitcoin ETF Outlook: Is It a Safer Exposure?",
+      date: 'April 11, 2025',
+      source: 'Zacks',
+      content: "Analysis of Bitcoin ETF outlook for Q2, discussing whether it offers safer exposure compared to direct cryptocurrency investments."
+    },
+    {
+      id: '3',
+      title: "Crypto-focused Janover skyrockets after completing its first Solana purchase",
+      date: 'April 10, 2025',
+      source: 'CNBC',
+      content: "Crypto-focused company Janover sees significant stock price increase after completing its first Solana purchase."
+    }
+  ],
+  'DJT': [
+    {
+      id: '1',
+      title: "TMTG Form S-3 Registration Statement Becomes Effective",
+      date: 'April 11, 2025',
+      source: 'GlobeNewswire',
+      content: "Trump Media & Technology Group's Form S-3 Registration Statement has become effective."
+    },
+    {
+      id: '2',
+      title: "Trump Media Ventures Into Canada And Mexico Amid Global Tariff Tensions",
+      date: 'April 10, 2025',
+      source: 'Benzinga',
+      content: "Trump Media is expanding operations into Canada and Mexico amid ongoing global tariff tensions."
+    },
+    {
+      id: '3',
+      title: "Trump Pauses Tariffs After Yields Surge: 'Bond Vigilantes Hit Another Homerun,' Experts Point To Bond Market Panic For Reversal",
+      date: 'April 10, 2025',
+      source: 'Benzinga',
+      content: "President Trump has paused tariffs following a surge in yields, with experts attributing the decision to bond market pressure."
     }
   ]
-};
+}
 
-const items = [
-  { 
-    id: '1', 
-    title: 'AAPL', 
+const updatedItems = [
+  {
+    id: '1',
+    title: 'AAPL',
     description: 'Apple Inc.',
-    data: [120, 125, 130, 128, 135, 140, 145]
+    data: [205.5, 194, 181.5, 186.7, 199, 190.5, 198]
   },
-  { 
-    id: '2', 
-    title: 'GOOG',
-    description: 'Alphabet Inc.',
-    data: [2800, 2850, 2900, 2950, 3000, 3050, 3100]
+  {
+    id: '2',
+    title: 'INTC',
+    description: 'Intel Corporation',
+    data: [22.4, 21.7, 19.6, 20, 21.5, 20.7, 19.7]
   },
-  { 
-    id: '3', 
-    title: 'MSFT', 
-    description: 'Microsoft Corporation',
-    data: [400, 325, 330, 335, 340, 345, 350]
+  {
+    id: '3',
+    title: 'NET',
+    description: 'Cloudflare, Inc.',
+    data: [112.5, 101.3, 98.5, 106.2, 112.5, 108.2, 106.3]
   },
+  {
+    id: '4',
+    title: 'PLTR',
+    description: 'Palantir Technologies Inc.',
+    data: [83.6, 74, 77.8, 77.2, 92, 88.6, 88.5]
+  },
+  {
+    id: '5',
+    title: 'APP',
+    description: 'AppLovin Corporation',
+    data: [261.5, 219.2, 232.2, 235.5, 275.5, 263.6, 250]
+  },
+  {
+    id: '6',
+    title: 'TSLA',
+    description: 'Tesla, Inc.',
+    data: [267.3, 239.5, 233.4, 221.8, 272.5, 251.1, 252.6]
+  },
+  {
+    id: '7',
+    title: 'MSTR',
+    description: 'MicroStrategy Incorporated',
+    data: [281.9, 293.9, 268.4, 237.9, 296.8, 272.3, 299.9]
+  },
+  {
+    id: '8',
+    title: 'DJT',
+    description: 'DJT Inc.',
+    data: [18.4, 17, 17.3, 16.6, 20.2, 18.8, 18.9]
+  }
 ];
 
+
 export default function ExploreScreen() {
-  const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const labels = ['4/3', '4/4', '4/7', '4/8', '4/9', '4/10', '4/11'];
   const [currentNewsIndices, setCurrentNewsIndices] = useState<{ [key: string]: number }>({});
   const [currentViews, setCurrentViews] = useState<{ [key: string]: number }>({});
   const verticalListRef = useRef<FlatList>(null);
@@ -81,6 +262,14 @@ export default function ExploreScreen() {
       }
     });
     setCurrentViews({});
+  };
+
+  const handleNewsChange = (symbol: string, newsIndex: number) => {
+    console.log(`Changing news for ${symbol} to index ${newsIndex}`);
+    setCurrentNewsIndices(prev => ({
+      ...prev,
+      [symbol]: newsIndex
+    }));
   };
 
   const PaginationDots = ({ currentView }: { currentView: number }) => (
@@ -104,7 +293,7 @@ export default function ExploreScreen() {
     <View style={styles.container}>
       <FlatList
         ref={verticalListRef}
-        data={items}
+        data={updatedItems}
         pagingEnabled
         snapToInterval={ITEM_HEIGHT}
         decelerationRate="fast"
@@ -169,6 +358,9 @@ export default function ExploreScreen() {
                         <NewsCard
                           news={stockNews}
                           currentNewsIndex={currentNewsIndices[item.title] || 0}
+                          symbol={item.title}
+                          articleIndex={(currentNewsIndices[item.title] || 0) + 1}
+                          onNewsChange={(newsIndex) => handleNewsChange(item.title, newsIndex)}
                         />
                       </View>
                     )}
