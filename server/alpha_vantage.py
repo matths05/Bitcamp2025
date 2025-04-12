@@ -10,6 +10,9 @@ from elevenlabs.types import VoiceSettings
 
 # Replace with your own API keys
 
+ALPHA_VANTAGE_API_KEY = "0LBXZO80GP31SQWA"
+GEMINI_API_KEY = "AIzaSyAgdZ9Y27IkY6WSeKRfqSLXD-VN4MIyTVg"
+ELEVENLABS_API_KEY = "sk_5ac49d3d0ea112d96969e82e65cd1367b2786946e4f49fd8"
 client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
 
 # Configure APIs
@@ -71,7 +74,7 @@ def save_voice(text: str, filepath: str):
     save(audio, filepath)
 
 
-def analyze_news_with_gemini(article: dict) -> str:
+def analyze_news_with_gemini(article: dict, ticker) -> str:
     """Send individual news article to Gemini for analysis in Playboi Carti style."""
     sentiment = article.get("overall_sentiment_label", "N/A")
 
@@ -85,10 +88,10 @@ def analyze_news_with_gemini(article: dict) -> str:
     Please provide a detailed analysis focusing on:
     1. The key points and implications of the news
     2. Your thoughts on the sentiment and what it means for the company
-    3. How this news might affect the company's future
+    3. How this news might affect the company: {ticker}'s future
     
     DO NOT USE MARKDOWN and DO NOT include ellipses for pauses and DO NOT use emojis to emphasize points. Also do not include
-    carti's actions as part of your response. Be extra detailed about the sentiment and what it means for the company's vibe and AURA."""
+    carti's actions as part of your response. Be extra detailed about the sentiment and what it means for the company's vibe and AURA. Include Carti's signature catchphrases like slatt and bih and more. """
 
     response = model.generate_content(prompt)
     return response.text
@@ -119,7 +122,7 @@ def analyze_with_gemini(company_data: Dict[str, Any], news_data: list) -> str:
     
     Please provide a detailed analysis focusing on the company's position in its industry, key financial metrics, and recent news developments.
     DO NOT USE MARKDOWN and DO NOT include ellipses for pauses and DO NOT include emojis to emphasize points. Also do not include
-    carti's actions as part of your response. Please be verbose and detailed in your analysis."""
+    carti's actions as part of your response. Please be verbose and detailed in your analysis.Include Carti's signature catchphrases like slatt and bih and more."""
 
     response = model.generate_content(prompt)
     return response.text
@@ -203,7 +206,7 @@ if __name__ == "__main__":
             print(f"Summary: {article['summary']}")
             print(f"Sentiment: {article.get('overall_sentiment_label', 'N/A')}")
             print("\nCarti's Analysis:")
-            carti_analysis = analyze_news_with_gemini(article)
+            carti_analysis = analyze_news_with_gemini(article, args.ticker)
             print(carti_analysis)
 
             # Generate and save article voice
