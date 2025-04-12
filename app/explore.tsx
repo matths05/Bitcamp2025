@@ -65,7 +65,7 @@ const items = [
   },
 ];
 
-export default function TabTwoScreen() {
+export default function ExploreScreen() {
   const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const [currentNewsIndices, setCurrentNewsIndices] = useState<{ [key: string]: number }>({});
   const [currentViews, setCurrentViews] = useState<{ [key: string]: number }>({});
@@ -252,4 +252,4 @@ const styles = StyleSheet.create({
   paginationDotActive: {
     backgroundColor: '#FFFFFF',
   },
-});
+}); 
