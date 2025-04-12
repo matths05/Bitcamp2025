@@ -11,8 +11,12 @@ from elevenlabs.types import VoiceSettings
 # Replace with your own API keys
 
 # Configure APIs
+ALPHA_VANTAGE_API_KEY = "Y9TJW1DZ5R2VMHQS"
+GEMINI_API_KEY = "AIzaSyAgdZ9Y27IkY6WSeKRfqSLXD-VN4MIyTVg"
+ELEVENLABS_API_KEY = "sk_5ac49d3d0ea112d96969e82e65cd1367b2786946e4f49fd8"
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
+client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
 
 
 # Get company overview (including description)
@@ -76,8 +80,8 @@ def analyze_news_with_gemini(article: dict, ticker) -> str:
     prompt = f"""Imagine you are playboi carti.
     Analyze this news article and provide insights in carti voice:
     
-    Headline: {article['title']}
-    Summary: {article['summary']}
+    Headline: {article["title"]}
+    Summary: {article["summary"]}
     Sentiment: {sentiment}
     
     Please provide a detailed analysis focusing on:
@@ -104,13 +108,13 @@ def analyze_with_gemini(company_data: Dict[str, Any], news_data: list) -> str:
     prompt = f"""Imagine you are playboi carti.
     Analyze this company data and provide insights in carti voice:
     
-    Company Name: {company_data.get('Name', 'N/A')}
-    (Important be detailed) Description: {company_data.get('Description', 'N/A')}
-    Sector: {company_data.get('Sector', 'N/A')}
-    Industry: {company_data.get('Industry', 'N/A')}
-    Market Cap: {company_data.get('MarketCapitalization', 'N/A')}
-    P/E Ratio: {company_data.get('PERatio', 'N/A')}
-    Dividend Yield: {company_data.get('DividendYield', 'N/A')}
+    Company Name: {company_data.get("Name", "N/A")}
+    (Important be detailed) Description: {company_data.get("Description", "N/A")}
+    Sector: {company_data.get("Sector", "N/A")}
+    Industry: {company_data.get("Industry", "N/A")}
+    Market Cap: {company_data.get("MarketCapitalization", "N/A")}
+    P/E Ratio: {company_data.get("PERatio", "N/A")}
+    Dividend Yield: {company_data.get("DividendYield", "N/A")}
 
     Latest News:
     {news_summary}
