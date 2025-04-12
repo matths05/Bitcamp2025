@@ -11,9 +11,7 @@ from elevenlabs.types import VoiceSettings
 # Replace with your own API keys
 
 # Configure APIs
-ALPHA_VANTAGE_API_KEY = "Y9TJW1DZ5R2VMHQS"
-GEMINI_API_KEY = "AIzaSyAgdZ9Y27IkY6WSeKRfqSLXD-VN4MIyTVg"
-ELEVENLABS_API_KEY = "sk_5ac49d3d0ea112d96969e82e65cd1367b2786946e4f49fd8"
+
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
 client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
