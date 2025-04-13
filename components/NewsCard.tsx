@@ -1,5 +1,5 @@
 import React, { useEffect, useState, memo } from 'react';
-import { View, Text, StyleSheet, Dimensions, Platform, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Platform, ScrollView, Image } from 'react-native';
 import { Audio } from 'expo-av';
 import { audioAssets } from '../utils/assetMap';
 
@@ -10,6 +10,7 @@ export interface NewsItem {
   date: string;
   source: string;
   content: string;
+  banner_image?: string;
 }
 
 interface NewsCardProps {
@@ -43,6 +44,9 @@ export const NewsCard: React.FC<NewsCardProps> = memo(({
 }) => {
   const currentNews = newsItem;
   const [sound, setSound] = useState<Audio.Sound>();
+
+  // Log the banner image URL when the component renders
+  console.log(`NewsCard for ${symbol} article ${articleIndex + 1}: Banner Image URL = ${currentNews.banner_image}`);
 
   useEffect(() => {
     return () => {
@@ -120,6 +124,15 @@ export const NewsCard: React.FC<NewsCardProps> = memo(({
             <Text style={styles.source}>{currentNews.source}</Text>
           </View>
         </View>
+        {/* Add Banner Image if it exists */}
+        {currentNews.banner_image && (
+          <Image
+            source={{ uri: currentNews.banner_image }}
+            style={styles.bannerImage}
+            resizeMode="cover" // Or 'contain' depending on desired look
+            onError={(e) => console.error(`Error loading image for ${symbol} article ${articleIndex + 1}:`, e.nativeEvent.error)}
+          />
+        )}
         <ScrollView
           style={styles.contentContainer}
           showsVerticalScrollIndicator={false}
@@ -157,7 +170,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginBottom: 8,
   },
   date: {
     fontSize: 12,
@@ -167,6 +179,12 @@ const styles = StyleSheet.create({
   source: {
     fontSize: 14,
     color: '#00C805',
+  },
+  bannerImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: 8,
+    marginBottom: 16,
   },
   contentContainer: {
     flex: 1,

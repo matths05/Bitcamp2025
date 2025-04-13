@@ -14,21 +14,24 @@ const mockNews = {
       title: "Consumer Tech News: US President Puts 90-Days Pause On Tariffs, Microsoft May Cut Jobs & More",
       date: 'April 12, 2025',
       source: 'Benzinga',
-      content: "US President puts 90-days pause on tariffs, impacting the tech industry including Apple."
+      content: "US President puts 90-days pause on tariffs, impacting the tech industry including Apple.",
+      banner_image: "https://cdn.benzinga.com/files/images/story/2025/04/12/Us-Tariff-Rate-Rising---Trade-Policy---B.jpeg?width=1200&height=800&fit=crop"
     },
     {
       id: '2',
       title: "Trump Administration Grants Tariff Reprieve To Tech Industry; Apple And Nvidia Among Beneficiaries",
       date: 'April 12, 2025',
       source: 'Benzinga',
-      content: "The Trump administration has granted a tariff reprieve to the tech industry, with Apple and Nvidia among the beneficiaries."
+      content: "The Trump administration has granted a tariff reprieve to the tech industry, with Apple and Nvidia among the beneficiaries.",
+      banner_image: "https://cdn.benzinga.com/files/images/story/2025/04/12/Rostov-on-don-----Russia---February-3-20.jpeg?width=1200&height=800&fit=crop"
     },
     {
       id: '3',
       title: "Bulls And Bears: Apple, Nike, US Steel - And The Markets Ride Out Ongoing Volatility",
       date: 'April 12, 2025',
       source: 'Benzinga',
-      content: "Market analysis featuring Apple, Nike, and US Steel as markets continue to experience volatility."
+      content: "Market analysis featuring Apple, Nike, and US Steel as markets continue to experience volatility.",
+      banner_image: "https://cdn.benzinga.com/files/images/story/2025/04/12/bulls-and-bears-25ai.jpeg?width=1200&height=800&fit=crop"
     }
   ],
   'INTC': [
@@ -37,21 +40,24 @@ const mockNews = {
       title: "Consumer Tech News: US President Puts 90-Days Pause On Tariffs, Microsoft May Cut Jobs & More",
       date: 'April 12, 2025',
       source: 'Benzinga',
-      content: "US President puts 90-days pause on tariffs, potentially impacting Intel among other tech companies."
+      content: "US President puts 90-days pause on tariffs, potentially impacting Intel among other tech companies.",
+      banner_image: "https://cdn.benzinga.com/files/images/story/2025/04/12/Us-Tariff-Rate-Rising---Trade-Policy---B.jpeg?width=1200&height=800&fit=crop"
     },
     {
       id: '2',
       title: "1 Artificial Intelligence Stock I'm Buying Hand Over First While It's Down 30%",
       date: 'April 12, 2025',
       source: 'The Motley Fool',
-      content: "Analysis of an AI stock that's currently down 30%, possibly referencing Intel as an investment opportunity."
+      content: "Analysis of an AI stock that's currently down 30%, possibly referencing Intel as an investment opportunity.",
+      banner_image: "https://media.ycharts.com/charts/0bbb2b8bf87897e7c94107bb8f4a6ccb.png"
     },
     {
       id: '3',
       title: "Trump Tariff Wars: China's New Rule To Exempt Nvidia, Qualcomm And Others From Levies, But These Chip Companies Will Be Hit With 125% Tariffs",
       date: 'April 12, 2025',
       source: 'Benzinga',
-      content: "China has implemented new tariff rules that exempt certain chip companies like Nvidia and Qualcomm, while others may face 125% tariffs."
+      content: "China has implemented new tariff rules that exempt certain chip companies like Nvidia and Qualcomm, while others may face 125% tariffs.",
+      banner_image: "https://editorial-assets.benzinga.com/wp-content/uploads/2025/04/12020305/Screenshot-2025-04-12-at-11.32.55%E2%80%AFAM.png"
     }
   ],
   'NET': [
@@ -60,21 +66,24 @@ const mockNews = {
       title: "Top Technology Executives Recognized at the 2025 SeattleCIO ORBIE Awards",
       date: 'April 11, 2025',
       source: 'Benzinga',
-      content: "Recognition of top technology executives at the 2025 SeattleCIO ORBIE Awards."
+      content: "Recognition of top technology executives at the 2025 SeattleCIO ORBIE Awards.",
+      banner_image: "https://ml.globenewswire.com/Resource/Download/0872b53b-016f-4ad5-a139-2c7a7452cbbc/dsc02815.jpg"
     },
     {
       id: '2',
       title: "Deal Dispatch: Harley-Davidson To Wipe Out? Plus, Prada's Versace Purchase Garners A Fashionable Price",
       date: 'April 11, 2025',
       source: 'Benzinga',
-      content: "Business deals update including potential Harley-Davidson developments and Prada's purchase of Versace."
+      content: "Business deals update including potential Harley-Davidson developments and Prada's purchase of Versace.",
+      banner_image: "https://cdn.benzinga.com/files/images/story/2025/04/11/benzinga-deal-dispatch2.jpeg?width=1200&height=800&fit=crop"
     },
     {
       id: '3',
       title: "StarkWare researchers propose smart contracts for Bitcoin with ColliderVM",
       date: 'April 11, 2025',
       source: 'CoinTelegraph',
-      content: "StarkWare researchers have proposed a new method for implementing smart contracts for Bitcoin using ColliderVM technology."
+      content: "StarkWare researchers have proposed a new method for implementing smart contracts for Bitcoin using ColliderVM technology.",
+      banner_image: "https://s3.cointelegraph.com/uploads/2025-04/0196247f-93b2-7017-8abd-51b6897228d2"
     }
   ],
   'PLTR': [
@@ -83,21 +92,24 @@ const mockNews = {
       title: "Stock Market Crash: Is Palantir a Buy?",
       date: 'April 12, 2025',
       source: 'The Motley Fool',
-      content: "Analysis of whether Palantir represents a good buying opportunity during a stock market downturn."
+      content: "Analysis of whether Palantir represents a good buying opportunity during a stock market downturn.",
+      banner_image: "https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F814273%2Fgettyimages-1361008768.jpg&op=resize&w=700"
     },
     {
       id: '2',
       title: "Should You Forget Palantir and Buy This Artificial Intelligence (AI) Stock Instead?",
       date: 'April 12, 2025',
       source: 'The Motley Fool',
-      content: "Comparison between Palantir and another AI stock, evaluating which might be a better investment opportunity."
+      content: "Comparison between Palantir and another AI stock, evaluating which might be a better investment opportunity.",
+      banner_image: "https://g.foolcdn.com/editorial/images/814214/ai-written-on-circuit-board.jpg"
     },
     {
       id: '3',
       title: "Prediction: 2 AI Stocks Will Be Worth More Than Palantir Technologies by Early 2026",
       date: 'April 12, 2025',
       source: 'The Motley Fool',
-      content: "Analysis predicting that two AI stocks will surpass Palantir Technologies in market value by early 2026."
+      content: "Analysis predicting that two AI stocks will surpass Palantir Technologies in market value by early 2026.",
+      banner_image: "https://g.foolcdn.com/editorial/images/814557/artificial-intelligence-7.jpg"
     }
   ],
   'APP': [
@@ -106,21 +118,24 @@ const mockNews = {
       title: "AppLovin Corporation Investors: May 5, 2025 Filing Deadline in Securities Class Action",
       date: 'April 11, 2025',
       source: 'Benzinga',
-      content: "Notification about May 5, 2025 filing deadline in securities class action for AppLovin Corporation investors."
+      content: "Notification about May 5, 2025 filing deadline in securities class action for AppLovin Corporation investors.",
+      banner_image: "https://ml.globenewswire.com/media/405ec490-b904-4a5e-85a7-710cdebe280d/small/ktmc-logo-rgb-jpg.jpg"
     },
     {
       id: '2',
       title: "Tech Stocks Soared This Week, but Uncertainty Persists",
       date: 'April 11, 2025',
       source: 'The Motley Fool',
-      content: "Analysis of tech stocks performance this week with mention of ongoing uncertainty in the market."
+      content: "Analysis of tech stocks performance this week with mention of ongoing uncertainty in the market.",
+      banner_image: "https://g.foolcdn.com/editorial/images/814521/gettyimages-1492180527.jpg"
     },
     {
       id: '3',
       title: "Tech stocks head for winning week with Nvidia tracking for 15% bounceback",
       date: 'April 11, 2025',
       source: 'CNBC',
-      content: "Tech stocks are heading for a winning week with Nvidia tracking for a 15% recovery."
+      content: "Tech stocks are heading for a winning week with Nvidia tracking for a 15% recovery.",
+      banner_image: "" // Kept placeholder as source is null
     }
   ],
   'TSLA': [
@@ -129,21 +144,24 @@ const mockNews = {
       title: "Consumer Tech News: US President Puts 90-Days Pause On Tariffs, Microsoft May Cut Jobs & More",
       date: 'April 12, 2025',
       source: 'Benzinga',
-      content: "US President puts 90-days pause on tariffs, potentially affecting Tesla among other tech companies."
+      content: "US President puts 90-days pause on tariffs, potentially affecting Tesla among other tech companies.",
+      banner_image: "https://cdn.benzinga.com/files/images/story/2025/04/12/Us-Tariff-Rate-Rising---Trade-Policy---B.jpeg?width=1200&height=800&fit=crop"
     },
     {
       id: '2',
       title: "Warren Buffett's Wealth Grows Even Amid Tariff War and Global Market Turmoil",
       date: 'April 12, 2025',
       source: 'Benzinga',
-      content: "Warren Buffett's wealth continues to grow despite ongoing tariff war and global market turmoil, with mentions of Tesla."
+      content: "Warren Buffett's wealth continues to grow despite ongoing tariff war and global market turmoil, with mentions of Tesla.",
+      banner_image: "https://cdn.benzinga.com/files/images/story/2025/04/12/Once-Called-A-Big-Mistake--Warren-Buffet.jpeg?width=1200&height=800&fit=crop"
     },
     {
       id: '3',
       title: "Elon Musk's Cybertruck Is Controversial, But Kids Love It",
       date: 'April 12, 2025',
       source: 'Benzinga',
-      content: "While Tesla's Cybertruck has been controversial among adults, it appears to be popular with children."
+      content: "While Tesla's Cybertruck has been controversial among adults, it appears to be popular with children.",
+      banner_image: "https://cdn.benzinga.com/files/images/story/2025/04/12/San-Jose--Ca--Usa---November-25--2023-Te.jpeg?width=1200&height=800&fit=crop"
     }
   ],
   'MSTR': [
@@ -152,21 +170,24 @@ const mockNews = {
       title: "Insider Trading: 3 CEOs Recently Buying Shares",
       date: 'April 11, 2025',
       source: 'Zacks',
-      content: "Report on three CEOs who have recently purchased shares of their own companies."
+      content: "Report on three CEOs who have recently purchased shares of their own companies.",
+      banner_image: "https://staticx-tuner.zacks.com/images/articles/main/ea/57303.jpg"
     },
     {
       id: '2',
       title: "Q2 Bitcoin ETF Outlook: Is It a Safer Exposure?",
       date: 'April 11, 2025',
       source: 'Zacks',
-      content: "Analysis of Bitcoin ETF outlook for Q2, discussing whether it offers safer exposure compared to direct cryptocurrency investments."
+      content: "Analysis of Bitcoin ETF outlook for Q2, discussing whether it offers safer exposure compared to direct cryptocurrency investments.",
+      banner_image: "https://staticx-tuner.zacks.com/images/articles/main/63/5033.jpg"
     },
     {
       id: '3',
       title: "Crypto-focused Janover skyrockets after completing its first Solana purchase",
       date: 'April 10, 2025',
       source: 'CNBC',
-      content: "Crypto-focused company Janover sees significant stock price increase after completing its first Solana purchase."
+      content: "Crypto-focused company Janover sees significant stock price increase after completing its first Solana purchase.",
+      banner_image: "" // Kept placeholder as source is null
     }
   ],
   'DJT': [
@@ -175,21 +196,24 @@ const mockNews = {
       title: "TMTG Form S-3 Registration Statement Becomes Effective",
       date: 'April 11, 2025',
       source: 'GlobeNewswire',
-      content: "Trump Media & Technology Group's Form S-3 Registration Statement has become effective."
+      content: "Trump Media & Technology Group's Form S-3 Registration Statement has become effective.",
+      banner_image: "" // Kept placeholder as source is empty string
     },
     {
       id: '2',
       title: "Trump Media Ventures Into Canada And Mexico Amid Global Tariff Tensions",
       date: 'April 10, 2025',
       source: 'Benzinga',
-      content: "Trump Media is expanding operations into Canada and Mexico amid ongoing global tariff tensions."
+      content: "Trump Media is expanding operations into Canada and Mexico amid ongoing global tariff tensions.",
+      banner_image: "https://cdn.benzinga.com/files/images/story/2025/04/10/Future-Plans.jpeg?width=1200&height=800&fit=crop"
     },
     {
       id: '3',
       title: "Trump Pauses Tariffs After Yields Surge: 'Bond Vigilantes Hit Another Homerun,' Experts Point To Bond Market Panic For Reversal",
       date: 'April 10, 2025',
       source: 'Benzinga',
-      content: "President Trump has paused tariffs following a surge in yields, with experts attributing the decision to bond market pressure."
+      content: "President Trump has paused tariffs following a surge in yields, with experts attributing the decision to bond market pressure.",
+      banner_image: "https://cdn.benzinga.com/files/images/story/2025/04/10/Bonds-Shutterstock.jpeg?width=1200&height=800&fit=crop"
     }
   ]
 }
@@ -499,4 +523,4 @@ const styles = StyleSheet.create({
   paginationDotActive: {
     backgroundColor: '#FFFFFF',
   },
-}); 
+});
