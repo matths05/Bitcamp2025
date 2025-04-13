@@ -1,6 +1,6 @@
 import { FlatList, View, Text, StyleSheet, Dimensions } from 'react-native';
 import { StockChart } from '../components/StockChart';
-import { NewsCard } from '../components/NewsCard';
+import { NewsCard, NewsItem } from '../components/NewsCard';
 import { useState, useRef } from 'react';
 
 const ITEM_HEIGHT = Dimensions.get('window').height;
@@ -245,47 +245,42 @@ const updatedItems = [
   }
 ];
 
+// Define types for horizontal list items
+interface ChartItem {
+  type: 'chart';
+  stockData: typeof updatedItems[0]; // Use the type of an item from updatedItems
+}
+
+interface NewsListItem {
+  type: 'news';
+  newsItem: NewsItem;
+  symbol: string;
+  articleIndex: number; // Index within the news array for this symbol
+}
+
+type HorizontalListItem = ChartItem | NewsListItem;
 
 export default function ExploreScreen() {
   const labels = ['4/3', '4/4', '4/7', '4/8', '4/9', '4/10', '4/11'];
-  const [currentNewsIndices, setCurrentNewsIndices] = useState<{ [key: string]: number }>({});
-  const [currentViews, setCurrentViews] = useState<{ [key: string]: number }>({});
+  // State to track the current horizontal page index for each stock item's ID
+  const [currentViews, setCurrentViews] = useState<{ [key: string]: number }>({}); 
+  // State to track the index of the currently active vertical item
+  const [activeVerticalIndex, setActiveVerticalIndex] = useState<number>(0);
   const verticalListRef = useRef<FlatList>(null);
   const horizontalListRefs = useRef<{ [key: string]: FlatList | null }>({});
 
-  const handleVerticalScroll = (index: number) => {
-    // Reset to chart view when navigating between stocks
-    Object.keys(currentViews).forEach(key => {
-      const horizontalList = horizontalListRefs.current[key];
-      if (horizontalList) {
-        horizontalList.scrollToOffset({ offset: 0, animated: false });
-      }
-    });
-    setCurrentViews({});
-  };
-
-  const handleNewsChange = (symbol: string, newsIndex: number) => {
-    console.log(`Changing news for ${symbol} to index ${newsIndex}`);
-    setCurrentNewsIndices(prev => ({
-      ...prev,
-      [symbol]: newsIndex
-    }));
-  };
-
-  const PaginationDots = ({ currentView }: { currentView: number }) => (
+  // Updated PaginationDots to handle dynamic number of dots
+  const PaginationDots = ({ currentView, totalPages }: { currentView: number; totalPages: number }) => (
     <View style={styles.pagination}>
-      <View 
-        style={[
-          styles.paginationDot, 
-          currentView === 0 && styles.paginationDotActive
-        ]} 
-      />
-      <View 
-        style={[
-          styles.paginationDot, 
-          currentView === 1 && styles.paginationDotActive
-        ]} 
-      />
+      {Array.from({ length: totalPages }).map((_, index) => (
+        <View
+          key={index}
+          style={[
+            styles.paginationDot,
+            currentView === index && styles.paginationDotActive,
+          ]}
+        />
+      ))}
     </View>
   );
 
@@ -300,74 +295,134 @@ export default function ExploreScreen() {
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id}
         onMomentumScrollEnd={(event) => {
-          const index = Math.floor(event.nativeEvent.contentOffset.y / ITEM_HEIGHT);
-          handleVerticalScroll(index);
+          const newVerticalIndex = Math.round(event.nativeEvent.contentOffset.y / ITEM_HEIGHT);
+          if (newVerticalIndex !== activeVerticalIndex) {
+            console.log(`Vertical scroll ended. New active index: ${newVerticalIndex}`);
+            setActiveVerticalIndex(newVerticalIndex);
+            
+            // Scroll inactive horizontal lists back to the chart view
+            Object.keys(horizontalListRefs.current).forEach(itemId => {
+              // Find the index corresponding to this itemId
+              const itemIndex = updatedItems.findIndex(item => item.id === itemId);
+              if (itemIndex !== -1 && itemIndex !== newVerticalIndex) {
+                  const horizontalList = horizontalListRefs.current[itemId];
+                  if (horizontalList) {
+                      console.log(`Scrolling horizontal list for item ${itemId} (index ${itemIndex}) to start.`);
+                      horizontalList.scrollToOffset({ offset: 0, animated: false });
+                      // Also reset its horizontal view state if needed, although scrolling should trigger onScroll
+                      setCurrentViews(prev => ({ ...prev, [itemId]: 0 })); 
+                  }
+              }
+            });
+            // Ensure the new active item's horizontal state is set to 0 if not already
+            const activeItemId = updatedItems[newVerticalIndex]?.id;
+            if (activeItemId && currentViews[activeItemId] !== 0) {
+                setCurrentViews(prev => ({ ...prev, [activeItemId]: 0 }));
+            }
+          }
         }}
-        renderItem={({ item, index }) => {
+        renderItem={({ item, index: verticalIndex }) => {
           const isPositive = item.data[0] < item.data[item.data.length - 1];
           const priceColor = isPositive ? '#00C805' : '#FF3B30';
           const priceChange = ((item.data[item.data.length - 1] - item.data[0]) / item.data[0] * 100).toFixed(2);
           const stockNews = mockNews[item.title as keyof typeof mockNews] || [];
-          const currentView = currentViews[item.id] || 0;
+          // Get the current horizontal index for THIS stock item (keyed by item.id)
+          const currentHorizontalViewIndex = currentViews[item.id] || 0; 
           
+          // Create the data for the horizontal FlatList
+          const horizontalData: HorizontalListItem[] = [
+            { type: 'chart', stockData: item }, 
+            ...stockNews.map((news, newsIndex) => ({ 
+              type: 'news' as const,
+              newsItem: news,
+              symbol: item.title,
+              articleIndex: newsIndex
+            }))
+          ];
+          
+          const totalHorizontalPages = horizontalData.length;
+
           return (
             <View style={styles.pageContainer}>
               <FlatList
                 ref={(ref) => horizontalListRefs.current[item.id] = ref}
                 horizontal
                 pagingEnabled
-                initialScrollIndex={0}
                 showsHorizontalScrollIndicator={false}
-                data={[1, 2]} // 1 for chart, 2 for news
-                keyExtractor={(_, index) => index.toString()}
+                data={horizontalData} 
+                keyExtractor={(hItem, hIndex) => hItem.type === 'chart' ? `chart-${item.id}` : `news-${hItem.newsItem.id}`}
+                // Optimization: Prevent re-renders for off-screen items if possible
+                // initialNumToRender={1} 
+                // windowSize={3} // Adjust based on performance needs
                 onScroll={(event) => {
                   const offsetX = event.nativeEvent.contentOffset.x;
                   const newPage = Math.round(offsetX / SCREEN_WIDTH);
                   if (currentViews[item.id] !== newPage) {
+                    // console.log(`Horizontal scroll for ${item.title}: setting page to ${newPage}`);
                     setCurrentViews(prev => ({
                       ...prev,
-                      [item.id]: newPage
+                      [item.id]: newPage // Update state for THIS item.id
                     }));
                   }
                 }}
-                scrollEventThrottle={16}
-                renderItem={({ index: horizontalIndex }) => (
-                  <View style={[styles.page, { width: SCREEN_WIDTH }]}>
-                    {horizontalIndex === 0 ? (
-                      // Chart View
-                      <View style={styles.card}>
-                        <View style={styles.header}>
-                          <View>
-                            <Text style={styles.symbol}>{item.title}</Text>
-                            <Text style={styles.companyName}>{item.description}</Text>
+                scrollEventThrottle={16} 
+                renderItem={({ item: horizontalItem, index: horizontalIndex }) => {
+                  // Determine if the current *vertical* item is the active one
+                  const isCurrentVerticalItem = verticalIndex === activeVerticalIndex;
+                  // Determine if the current *horizontal* page is the active one for this item
+                  const isCurrentHorizontalPage = horizontalIndex === currentHorizontalViewIndex;
+                  
+                  // Audio should play only if BOTH vertical and horizontal views are active
+                  const shouldPlayChartAudio = horizontalItem.type === 'chart' && isCurrentVerticalItem && isCurrentHorizontalPage;
+                  const shouldPlayNewsAudio = horizontalItem.type === 'news' && isCurrentVerticalItem && isCurrentHorizontalPage;
+                  
+                  // Log audio flags for debugging
+                  // if (horizontalItem.type === 'chart') {
+                  //   console.log(`Chart   [V=${verticalIndex}, H=${horizontalIndex}]: ActiveV=${activeVerticalIndex}, CurrentHView=${currentHorizontalViewIndex} => Play=${shouldPlayChartAudio}`);
+                  // } else {
+                  //   console.log(`News    [V=${verticalIndex}, H=${horizontalIndex}]: ActiveV=${activeVerticalIndex}, CurrentHView=${currentHorizontalViewIndex} => Play=${shouldPlayNewsAudio}`);
+                  // }
+
+                  return (
+                    <View style={[styles.page, { width: SCREEN_WIDTH }]}>
+                      {horizontalItem.type === 'chart' ? (
+                        // Chart View
+                        <View style={styles.card}>
+                          <View style={styles.header}>
+                            <View>
+                              <Text style={styles.symbol}>{horizontalItem.stockData.title}</Text>
+                              <Text style={styles.companyName}>{horizontalItem.stockData.description}</Text>
+                            </View>
+                            <View style={styles.priceContainer}>
+                              <Text style={[styles.price, { color: priceColor }]}>
+                                ${horizontalItem.stockData.data[horizontalItem.stockData.data.length - 1]}
+                              </Text>
+                              <Text style={[styles.priceChange, { color: priceColor }]}>
+                                {priceChange}%
+                              </Text>
+                            </View>
                           </View>
-                          <View style={styles.priceContainer}>
-                            <Text style={[styles.price, { color: priceColor }]}>
-                              ${item.data[item.data.length - 1]}
-                            </Text>
-                            <Text style={[styles.priceChange, { color: priceColor }]}>
-                              {priceChange}%
-                            </Text>
-                          </View>
+                          <StockChart
+                            data={horizontalItem.stockData.data} 
+                            labels={labels}
+                            symbol={horizontalItem.stockData.title} 
+                            shouldPlayDescriptionAudio={shouldPlayChartAudio} 
+                          />
                         </View>
-                        <StockChart data={item.data} labels={labels} />
-                      </View>
-                    ) : (
-                      // News View
-                      <View style={styles.card}>
+                      ) : (
+                        // News View
                         <NewsCard
-                          news={stockNews}
-                          currentNewsIndex={currentNewsIndices[item.title] || 0}
-                          symbol={item.title}
-                          articleIndex={(currentNewsIndices[item.title] || 0) + 1}
-                          onNewsChange={(newsIndex) => handleNewsChange(item.title, newsIndex)}
+                          newsItem={horizontalItem.newsItem} 
+                          symbol={horizontalItem.symbol}
+                          articleIndex={horizontalItem.articleIndex} 
+                          shouldPlayAudio={shouldPlayNewsAudio} 
                         />
-                      </View>
-                    )}
-                  </View>
-                )}
+                      )}
+                    </View>
+                  );
+                }}
               />
-              <PaginationDots currentView={currentView} />
+              <PaginationDots currentView={currentHorizontalViewIndex} totalPages={totalHorizontalPages} />
             </View>
           );
         }}
